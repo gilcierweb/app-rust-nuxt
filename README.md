@@ -1,5 +1,5 @@
 # app-rust-nuxt
-## App build with Rust Lang and Nuxt.js. Api Rust and frontend with nuxt.js use vue.js.
+## App build with Rust Lang and Nuxt.js. Api Rust and frontend with nuxt.js using vue.js.
 
 ### Skill
 
@@ -26,3 +26,5 @@ yarn dev --open
 # run localhost:3000
 
 ```
+
+https://gilcierweb.com.br

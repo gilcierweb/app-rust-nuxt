@@ -4,6 +4,7 @@
 ### Skill
 
 - [Rust lang](https://www.rust-lang.org/)
+- [Actix Web](https://actix.rs/)
 - [Vue.js](https://vuejs.org/)
 - [Nuxt.js](https://nuxt.com/)
 - [Vuetify](https://vuetifyjs.com/)

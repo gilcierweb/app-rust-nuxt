@@ -1,52 +1,41 @@
+<script setup lang="ts">
+interface Photos {
+    id: number;
+    title: string;
+    url: string;
+    thumbnailUrl: string;
+}
+
+const { pending, data: photos } = await useFetch<Photos[]>('https://jsonplaceholder.typicode.com/photos', {
+    lazy: true
+    // ,server: false
+})
+</script>
+
 <template>
-    <div>
+    <v-container>
         <h1>Index page</h1>
-        <v-card width="400" class="mt-4">
-            <v-card-item>
-                <v-card-title>This is a title</v-card-title>
+        <v-row>
+            <v-col v-if="pending">
+                Loading ...
+                <v-progress-circular indeterminate :size="50" model-value="20"></v-progress-circular>
+            </v-col>
+            <v-col v-else cols="4" v-for="row in photos" :key="row.id">
+                <v-card width="400" class="mt-4">
+                    <v-card-item>
+                        <v-card-title>{{ row.title }}</v-card-title>
 
-                <v-card-subtitle>This is a subtitle</v-card-subtitle>
-            </v-card-item>
+                        <v-card-subtitle>{{ row.title }}</v-card-subtitle>
+                    </v-card-item>
 
-            <v-card-text>
-                This is content
-            </v-card-text>
-        </v-card>
+                    <v-card-text>
+                        <v-img class="bg-grey-lighten-2" max-height="125" src="https://picsum.photos/350/165?random"
+                            aspect-ratio="1"></v-img>
+                        <v-img :lazy-src="row.thumbnailUrl" :src="row.url" alt="image" aspect-ratio="1"></v-img>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
 
-        <v-card width="400" class="mt-4">
-            <v-card-item>
-                <v-card-title>This is a title</v-card-title>
-
-                <v-card-subtitle>This is a subtitle</v-card-subtitle>
-            </v-card-item>
-
-            <v-card-text>
-                This is content
-            </v-card-text>
-        </v-card>
-
-        <v-card width="400" class="mt-4">
-            <v-card-item>
-                <v-card-title>This is a title</v-card-title>
-
-                <v-card-subtitle>This is a subtitle</v-card-subtitle>
-            </v-card-item>
-
-            <v-card-text>
-                This is content
-            </v-card-text>
-        </v-card>
-
-        <v-card width="400" class="mt-4">
-            <v-card-item>
-                <v-card-title>This is a title</v-card-title>
-
-                <v-card-subtitle>This is a subtitle</v-card-subtitle>
-            </v-card-item>
-
-            <v-card-text>
-                This is content
-            </v-card-text>
-        </v-card>
-    </div>
+    </v-container>
 </template>

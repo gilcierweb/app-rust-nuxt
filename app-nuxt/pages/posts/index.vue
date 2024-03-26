@@ -35,6 +35,10 @@ const { pending, data: posts } = await useFetch<Posts[]>(`${config.public.ApiRus
                     <v-card-text>
                         <p> {{ $truncate(row.content, 70, '...') }}</p>
                         <p>{{ row.status }}</p>
+                        <p><NuxtLink :to="`/posts/${row.id}`">
+                            <v-btn>Details</v-btn>
+                        </NuxtLink>
+                    </p>
                     </v-card-text>
                 </v-card>
             </v-col>

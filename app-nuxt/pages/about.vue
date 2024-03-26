@@ -16,9 +16,9 @@ const { pending, data: posts } = await useFetch<Posts[]>('https://jsonplaceholde
     <v-container>
         <h1>About page</h1>
         <v-row>
-            <v-col v-if="pending">
-                Loading ...
-                <v-progress-circular indeterminate :size="50" model-value="20"></v-progress-circular>
+            <v-col align="center" :cols="12" align-self="center" v-if="pending">
+                Loading ... <br>
+                <v-progress-circular indeterminate :size="200" model-value="20"></v-progress-circular>
             </v-col>
             <v-col cols="4" v-else v-for="row in posts" :key="row.id">
                 <v-card width="400" class="mt-4">

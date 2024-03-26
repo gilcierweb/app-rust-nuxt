@@ -1,37 +1,44 @@
 <script setup lang="ts">
-interface Photos {
+const { $truncate } = useNuxtApp();
+interface Products {
     id: number;
     title: string;
+    description: string;
+    price: number;
     url: string;
-    thumbnailUrl: string;
+    brand: string;
+    category: string;
+    image: string;
 }
 
-const { pending, data: photos } = await useFetch<Photos[]>('https://jsonplaceholder.typicode.com/photos', {
+const config = useRuntimeConfig();
+const { pending, data: products } = await useFetch<Products[]>(`${config.public.baseURL}/products`, {
     lazy: true
     // ,server: false
 })
+
 </script>
 
 <template>
     <v-container>
         <h1>Index page</h1>
         <v-row>
-            <v-col v-if="pending">
-                Loading ...
-                <v-progress-circular indeterminate :size="50" model-value="20"></v-progress-circular>
+
+            <v-col align="center" :cols="12" align-self="center" v-if="pending">
+                Loading ... <br>
+                <v-progress-circular indeterminate :size="200" model-value="20"></v-progress-circular>
             </v-col>
-            <v-col v-else cols="4" v-for="row in photos" :key="row.id">
+            <v-col v-else cols="4" v-for="row in products" :key="row.id">
                 <v-card width="400" class="mt-4">
                     <v-card-item>
                         <v-card-title>{{ row.title }}</v-card-title>
-
-                        <v-card-subtitle>{{ row.title }}</v-card-subtitle>
+                        <v-card-subtitle>{{ row.description }}</v-card-subtitle>
                     </v-card-item>
 
                     <v-card-text>
-                        <v-img class="bg-grey-lighten-2" max-height="125" src="https://picsum.photos/350/165?random"
-                            aspect-ratio="1"></v-img>
-                        <v-img :lazy-src="row.thumbnailUrl" :src="row.url" alt="image" aspect-ratio="1"></v-img>
+                        <v-img :lazy-src="row.image" :src="row.image" cover alt="image" aspect-ratio="1"></v-img>
+                        <p> {{ $truncate(row.description, 70, '...') }}</p>
+                        <p>{{ formatNumberBR(row.price) }}</p>
                     </v-card-text>
                 </v-card>
             </v-col>

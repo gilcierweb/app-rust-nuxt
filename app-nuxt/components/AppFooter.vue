@@ -2,12 +2,13 @@
   export default {
     data: () => ({
       links: [
-        'Home',
-        'About Us',
-        'Team',
-        'Services',
-        'Blog',
-        'Contact Us',
+        {name: 'Home', url:'/' },
+        {name:'About Us', url:'/about' },
+        {name:'Team', url:'/faq' },
+        {name:'Plans', url:'/plans' },
+        {name:'Privacy', url:'/privacy' },
+        {name:'Terms', url:'/terms' },   
+        {name:'Contact Us', url:'/contacts' },
       ],
     }),
   }
@@ -17,16 +18,19 @@
     <div>
         <v-footer class="bg-grey-lighten-1">
     <v-row justify="center" no-gutters>
-      <v-btn
-        v-for="link in links"
-        :key="link"
+      <NuxtLink v-for="row in links"
+        :key="row.link" :to="row.url">
+   
+      <v-btn      
+        :key="row.link"
         class="mx-2"
         color="white"
         rounded="xl"
         variant="text"
       >
-        {{ link }}
+        {{ row.name }}
       </v-btn>
+    </NuxtLink>
       <v-col class="text-center mt-4" cols="12">
         {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
       </v-col>

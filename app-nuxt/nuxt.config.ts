@@ -19,5 +19,13 @@ export default defineNuxtConfig({
         charset: 'utf-8',
         viewport: 'width=device-width, initial-scale=1',
       }
+    },
+
+    runtimeConfig: {
+      public: {
+        ApiBaseUrl:'',
+        ApiRustBaseUrl:'',
+        baseURL: process.env.NUXT_BASE_URL || 'https://api.example.com/' // Exposed to the frontend as well.
+     }
     }
 })

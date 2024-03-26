@@ -2,6 +2,8 @@
 
 .tool-versions
 
+.env
+
 # Editor directories and files
 .idea
 .fleet

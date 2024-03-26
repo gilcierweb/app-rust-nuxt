@@ -71,5 +71,18 @@ yarn preview
 # bun
 bun run preview
 ```
+## Config dontenv .env file environment variables
+Loads environment variables from .env
+
+```shell
+cp .env-example .env # run execute in terminal
+
+# edit file .env
+NUXT_BASE_URL=https://fakestoreapi.com
+NUXT_PUBLIC_API_RUST_BASE_URL=https://jsonplaceholder.typicode.com/
+NUXT_HOST=0.0.0.0
+NUXT_PORT=3000
+
+```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

@@ -8,6 +8,11 @@
                     Home page
                 </v-list-item>
             </NuxtLink>
+            <NuxtLink to="/posts">
+                <v-list-item link>
+                    Posts page
+                </v-list-item>
+            </NuxtLink>
             <NuxtLink to="/about">
                 <v-list-item link>
                     About page

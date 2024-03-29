@@ -3,8 +3,9 @@
 
 ### Skill
 
-- [Rust lang](https://www.rust-lang.org/)
-- [Actix Web](https://actix.rs/)
+- [Rust Lang](https://www.rust-lang.org/)
+- [Actix Web - Rust](https://actix.rs/)
+- [PostgreSQL](https://www.postgresql.org/)
 - [Vue.js](https://vuejs.org/)
 - [Nuxt.js](https://nuxt.com/)
 - [Vuetify](https://vuetifyjs.com/)

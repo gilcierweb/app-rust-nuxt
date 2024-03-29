@@ -2,7 +2,7 @@
 const route = useRoute();
 const config = useRuntimeConfig();
 
-interface Products {
+interface Product {
     id: number;
     title: string;
     description: string;
@@ -14,7 +14,7 @@ interface Products {
 const id = route.params.id;
 console.log(route.params.id);
 
-const { data: product, pending } = await useLazyFetch<Products>(`${config.public.baseURL}/products/${id}`);
+const { data: product, pending } = await useLazyFetch<Product>(`${config.public.baseURL}/products/${id}`);
 
 </script>
 
@@ -30,18 +30,16 @@ const { data: product, pending } = await useLazyFetch<Products>(`${config.public
 
         <v-row v-else>
             <v-col cols="6">
-                <v-img :lazy-src="product.image" :src="product.image" alt="image" aspect-ratio="1"></v-img>
+                <v-img :lazy-src="product?.image" :src="product?.image" alt="image" aspect-ratio="1"></v-img>
             </v-col>
             <v-col cols="6">
-                <h1 class="text-h2">{{ product?.title }}</h1>
-                <p class="text-green font-weight-bold"> {{ formatNumberBR(product?.price) }}</p>
+                <h1 class="text-h3">{{ product?.title }}</h1>
+                <p class="text-green font-weight-bold">{{ formatNumberBR(product?.price) }}</p>
                 <p class="my-3"><v-chip>{{ product?.category }}</v-chip></p>
-                <v-btn size="x-large" color="success">
-                    Buy Now
-                </v-btn>
+                <v-btn size="x-large" color="success">Buy Now</v-btn>
             </v-col>
             <v-col cols="12">
-                <p> {{ product?.description }}</p>
+                <p>{{ product?.description }}</p>
             </v-col>
 
         </v-row>

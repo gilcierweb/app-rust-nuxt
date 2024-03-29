@@ -28,7 +28,7 @@ const { data: post, pending } = await useLazyFetch<Post>(`${config.public.ApiRus
             <v-col v-else cols="12">
                 <v-img height="400px" src="https://source.unsplash.com/random/400×400" cover></v-img>
                 <h2>{{ post?.title }}</h2>
-                <p> {{ post?.content }}</p>
+                <p>{{ post?.content }}</p>
                 <p>{{ post?.status }}</p>
                 <h1>{{ $route.params.id }} - {{ route.params.id }}</h1>
            

@@ -5,7 +5,7 @@ const config = useRuntimeConfig();
 interface Todos {
     id: number;
     title: string;
-    description: string;   
+    description: string;
 }
 
 const { pending, data: todos } = await useFetch<Todos[]>(`${config.public.ApiRustBaseUrl}/api/todos`, {
@@ -32,12 +32,12 @@ const { pending, data: todos } = await useFetch<Todos[]>(`${config.public.ApiRus
                     </v-card-item>
 
                     <v-card-text>
-                        <p> {{ $truncate(row.description, 70, '...') }}</p>
-                     
-                        <p><NuxtLink :to="`/todos/${row.id}`">
-                            <v-btn>Details</v-btn>
-                        </NuxtLink>
-                    </p>
+                        <p>{{ $truncate(row.description, 70, '...') }}</p>
+                        <p>
+                            <NuxtLink :to="`/todos/${row.id}`">
+                                <v-btn>Details</v-btn>
+                            </NuxtLink>
+                        </p>
                     </v-card-text>
                 </v-card>
             </v-col>

@@ -1,10 +1,11 @@
 <template>
-    <v-app>     
-        <AppHeader></AppHeader> 
+      <NuxtLoadingBar :duration="1000" />
+    <v-app>
+        <AppHeader></AppHeader>
 
-       <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+        <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
             <slot />
-        </v-main>  
+        </v-main>
 
         <AppFooter></AppFooter>
     </v-app>

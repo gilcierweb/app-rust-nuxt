@@ -26,7 +26,7 @@ const { data: todo, pending } = await useLazyFetch<Todo>(`${config.public.ApiRus
             </v-col>
             <v-col v-else cols="12">
                 <h2>{{ todo?.title }}</h2>
-                <p> {{ todo?.description }}</p>
+                <p>{{ todo?.description }}</p>
                 <h1>{{ $route.params.id }} - {{ route.params.id }}</h1>
            
             </v-col>

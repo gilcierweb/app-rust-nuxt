@@ -14,7 +14,7 @@ use crate::repository::schema::posts::dsl::*;
 pub type DBPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 pub struct Database {
-    pool: DBPool,
+   pub pool: DBPool,
 }
 
 impl Database {

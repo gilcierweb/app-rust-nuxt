@@ -2,6 +2,12 @@
 name = "api-rust"
 version = "0.1.0"
 edition = "2021"
+default-run = "api-rust"
+
+[[bin]]
+name = "seed"
+path = "src/bin/seed.rs"
+# required-features = ["bin"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -13,3 +19,4 @@ serde = { version = "1.0.197", features = ["derive"] }
 uuid = { version = "1.7.0", features = ["v4"] }
 diesel = { version = "2.1.5", features = ["postgres", "r2d2", "chrono", "uuid"] }
 actix-cors = "=0.6.5"
+fakeit = "1.2.0"

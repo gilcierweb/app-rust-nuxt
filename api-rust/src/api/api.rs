@@ -1,4 +1,4 @@
-use crate::{models::post::Post, models::todo::Todo, repository::database::Database};
+pub use crate::{models::post::Post, models::todo::Todo, repository::database::Database};
 use actix_web::{delete, get, post, put, web, HttpResponse};
 
 #[post("/todos")]

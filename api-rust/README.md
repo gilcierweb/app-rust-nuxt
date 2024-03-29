@@ -20,6 +20,14 @@ cargo run
 
 ```
 
+### Run populate data fake with inspired by db:seed from ruby on rails
+
+```shell
+cd api-rust/
+cargo run --bin seed
+# run populate data fake on database
+
+```
 
 
 https://gilcierweb.com.br

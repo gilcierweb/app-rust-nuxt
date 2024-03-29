@@ -3,7 +3,7 @@ const { $truncate } = useNuxtApp();
 const route = useRoute();
 const config = useRuntimeConfig();
 
-interface Posts {
+interface Post {
     id: number;
     title: string;
     content: string;
@@ -12,7 +12,7 @@ interface Posts {
 const id = route.params.id;
 console.log(route.params.id);
 
-const { data: post, pending } = await useLazyFetch<Posts[]>(`${config.public.ApiRustBaseUrl}/api/posts/${id}`);
+const { data: post, pending } = await useLazyFetch<Post>(`${config.public.ApiRustBaseUrl}/api/posts/${id}`);
 
 </script>
 
@@ -26,9 +26,9 @@ const { data: post, pending } = await useLazyFetch<Posts[]>(`${config.public.Api
                 <v-progress-circular indeterminate :size="200" model-value="20"></v-progress-circular>
             </v-col>
             <v-col v-else cols="12">
-                <h2>{{ post.title }}</h2>
-                <p> {{ post.content }}</p>
-                <p>{{ post.status }}</p>
+                <h2>{{ post?.title }}</h2>
+                <p> {{ post?.content }}</p>
+                <p>{{ post?.status }}</p>
                 <h1>{{ $route.params.id }} - {{ route.params.id }}</h1>
            
             </v-col>

@@ -18,7 +18,7 @@ const { data: post, pending } = await useLazyFetch<Post>(`${config.public.ApiRus
 
 <template>
     <v-container>
-        <h1>Show Post page</h1>
+        <h1>Show Post Page</h1>
         <v-row>
 
             <v-col align="center" :cols="12" align-self="center" v-if="pending">

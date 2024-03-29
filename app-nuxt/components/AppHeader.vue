@@ -13,6 +13,11 @@
                     Posts page
                 </v-list-item>
             </NuxtLink>
+            <NuxtLink to="/todos">
+                <v-list-item link>
+                    Todos page
+                </v-list-item>
+            </NuxtLink>
             <NuxtLink to="/about">
                 <v-list-item link>
                     About page

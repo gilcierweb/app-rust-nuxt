@@ -26,6 +26,7 @@ const { data: post, pending } = await useLazyFetch<Post>(`${config.public.ApiRus
                 <v-progress-circular indeterminate :size="200" model-value="20"></v-progress-circular>
             </v-col>
             <v-col v-else cols="12">
+                <v-img height="400px" src="https://source.unsplash.com/random/400×400" cover></v-img>
                 <h2>{{ post?.title }}</h2>
                 <p> {{ post?.content }}</p>
                 <p>{{ post?.status }}</p>

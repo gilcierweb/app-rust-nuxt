@@ -6,7 +6,7 @@ interface Posts {
     id: number;
     title: string;
     content: string;
-    status: number; 
+    status: number;
 }
 
 const { pending, data: posts } = await useFetch<Posts[]>(`${config.public.ApiRustBaseUrl}/api/posts`, {
@@ -27,6 +27,7 @@ const { pending, data: posts } = await useFetch<Posts[]>(`${config.public.ApiRus
             </v-col>
             <v-col v-else cols="4" v-for="row in posts" :key="row.id">
                 <v-card width="400" class="mt-4">
+                    <v-img height="200px" src="https://source.unsplash.com/random/300×300" cover></v-img>
                     <v-card-item>
                         <v-card-title>{{ row.title }}</v-card-title>
                         <v-card-subtitle>{{ row.content }}</v-card-subtitle>
@@ -35,10 +36,11 @@ const { pending, data: posts } = await useFetch<Posts[]>(`${config.public.ApiRus
                     <v-card-text>
                         <p> {{ $truncate(row.content, 70, '...') }}</p>
                         <p>{{ row.status }}</p>
-                        <p><NuxtLink :to="`/posts/${row.id}`">
-                            <v-btn>Details</v-btn>
-                        </NuxtLink>
-                    </p>
+                        <p>
+                            <NuxtLink :to="`/posts/${row.id}`">
+                                <v-btn>Details</v-btn>
+                            </NuxtLink>
+                        </p>
                     </v-card-text>
                 </v-card>
             </v-col>

@@ -5,8 +5,7 @@ interface Products {
     title: string;
     description: string;
     price: number;
-    url: string;
-    brand: string;
+    url: string;   
     category: string;
     image: string;
 }
@@ -39,6 +38,11 @@ const { pending, data: products } = await useFetch<Products[]>(`${config.public.
                         <v-img :lazy-src="row.image" :src="row.image" cover alt="image" aspect-ratio="1"></v-img>
                         <p> {{ $truncate(row.description, 70, '...') }}</p>
                         <p>{{ formatNumberBR(row.price) }}</p>
+                        <p>
+                            <NuxtLink :to="`/products/${row.id}`">
+                                <v-btn>Details</v-btn>
+                            </NuxtLink>
+                        </p>
                     </v-card-text>
                 </v-card>
             </v-col>

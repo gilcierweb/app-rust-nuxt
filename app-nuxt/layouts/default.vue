@@ -1,5 +1,4 @@
 <template>
-      <NuxtLoadingBar :duration="1000" />
     <v-app>
         <AppHeader></AppHeader>
 

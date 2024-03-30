@@ -40,7 +40,7 @@ const { pending, data: products } = await useFetch<Products[]>(`${config.public.
                         <p>{{ formatNumberBR(row.price) }}</p>
                         <p>
                             <NuxtLink :to="`/products/${row.id}`">
-                                <v-btn>Details</v-btn>
+                                <v-btn block color="success">Details</v-btn>
                             </NuxtLink>
                         </p>
                     </v-card-text>

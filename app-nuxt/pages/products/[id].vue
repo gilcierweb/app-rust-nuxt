@@ -36,7 +36,7 @@ const { data: product, pending } = await useLazyFetch<Product>(`${config.public.
                 <h1 class="text-h3">{{ product?.title }}</h1>
                 <p class="text-green font-weight-bold">{{ formatNumberBR(product?.price) }}</p>
                 <p class="my-3"><v-chip>{{ product?.category }}</v-chip></p>
-                <v-btn size="x-large" color="success">Buy Now</v-btn>
+                <v-btn size="x-large" block color="success">Buy Now</v-btn>
             </v-col>
             <v-col cols="12">
                 <p>{{ product?.description }}</p>

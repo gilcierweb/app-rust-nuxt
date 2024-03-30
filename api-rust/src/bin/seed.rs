@@ -11,8 +11,7 @@ use crate::repository::schema::posts::dsl::*;
 use crate::repository::schema::todos::dsl::*;
 use crate::{models::post::Post, models::todo::Todo, repository::database::Database};
 
-fn post_create_seed() {
-    let api_db = Database::new();
+pub fn post_create_seed(db: &mut Database) {
 
     for index in 1..12 {
         println!("{}", index);
@@ -30,13 +29,12 @@ fn post_create_seed() {
 
         let _ = diesel::insert_into(posts)
             .values(&post)
-            .execute(&mut api_db.pool.get().unwrap())
+            .execute(&mut db.pool.get().unwrap())
             .expect("Error creating new post");
     }
 }
 
-fn todo_create_seed() {
-    let api_db = Database::new();
+pub fn todo_create_seed(db: &mut Database) {
 
     for index in 1..12 {
         println!("{}", index);
@@ -53,14 +51,15 @@ fn todo_create_seed() {
 
         let _ = diesel::insert_into(todos)
             .values(&todo)
-            .execute(&mut api_db.pool.get().unwrap())
+            .execute(&mut db.pool.get().unwrap())
             .expect("Error creating new post");
     }
 }
 
 fn main() {
+    let mut api_db = Database::new();
     println!("rust db:seed");
-    post_create_seed();
-    todo_create_seed();
+    post_create_seed(&mut api_db);
+    todo_create_seed(&mut api_db);
     println!("rust db:seed end");
 }

@@ -2,9 +2,14 @@ use actix_cors::Cors;
 use actix_web::{get, http::header, web, App, HttpResponse, HttpServer, Responder, Result};
 use serde::Serialize;
 
+// Import modules is required for use crate::mymod::
 mod api;
 mod models;
 mod repository;
+mod db;
+mod auth;
+mod config;
+mod controllers;
 
 #[derive(Serialize)]
 pub struct Response {
@@ -33,7 +38,7 @@ async fn main() -> std::io::Result<()> {
     let api_db = repository::database::Database::new();
     let app_data = web::Data::new(api_db);
 
-    println!("Running in localhost:8080");
+    println!("Running in http://localhost:8080");
 
     HttpServer::new(move || {
         App::new()

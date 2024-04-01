@@ -2,9 +2,10 @@ use serde::{Deserialize, Serialize};
 
 use diesel::{Queryable, Insertable, AsChangeset};
 
+use crate::db::schema::posts;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Queryable, Insertable, AsChangeset)]
-#[diesel(table_name = crate::repository::schema::posts)]
+#[diesel(table_name = posts)]
 pub struct Post {
     #[serde(default)]
     pub id: String,

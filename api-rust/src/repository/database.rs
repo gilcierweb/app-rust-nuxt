@@ -6,10 +6,10 @@ use diesel::r2d2::{self, ConnectionManager};
 use dotenv::dotenv;
 
 use crate::models::todo::Todo;
-use crate::repository::schema::todos::dsl::*;
+use crate::db::schema::todos::dsl::*;
 
 use crate::models::post::Post;
-use crate::repository::schema::posts::dsl::*;
+use crate::db::schema::posts::dsl::*;
 
 pub type DBPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 

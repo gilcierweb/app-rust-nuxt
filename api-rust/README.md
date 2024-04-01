@@ -45,5 +45,15 @@ cargo run --bin seed
 
 ```
 
+What follows is a high-level list of features and those which are planned:
+
+* [x] Connection Database postgresql with diesel rust
+* [x] Posts
+* [x] Todos
+* [ ] Users
+* [ ] User Authentication like gem Devise of Ruby
+* [ ] JWT for API
+* [ ] Refactor all code
+
 
 https://gilcierweb.com.br

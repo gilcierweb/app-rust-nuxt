@@ -6,9 +6,11 @@ use fakeit::words;
 mod models;
 #[path = "../repository/mod.rs"]
 mod repository;
+#[path = "../db/mod.rs"]
+pub mod db;
 
-use crate::repository::schema::posts::dsl::*;
-use crate::repository::schema::todos::dsl::*;
+use crate::db::schema::posts::dsl::*;
+use crate::db::schema::todos::dsl::*;
 use crate::{models::post::Post, models::todo::Todo, repository::database::Database};
 
 pub fn post_create_seed(db: &mut Database) {

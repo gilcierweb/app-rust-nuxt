@@ -1,8 +1,10 @@
 use serde::{Deserialize, Serialize};
 use diesel::{Queryable, Insertable, AsChangeset};
 
+use crate::db::schema::todos;
+
 #[derive(Serialize, Deserialize, Debug, Clone, Queryable, Insertable, AsChangeset)]
-#[diesel(table_name = crate::repository::schema::todos)]
+#[diesel(table_name = todos)]
 pub struct Todo {
     #[serde(default)]
     pub id: String,

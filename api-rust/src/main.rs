@@ -1,11 +1,12 @@
 use actix_cors::Cors;
-use actix_web::{get, http::header, web, App, HttpResponse, HttpServer, Responder, Result};
+use actix_web::{get, http::header, web, App, HttpResponse, HttpServer, Responder, Result, middleware};
 use serde::Serialize;
+use std::env;
 
 // Import modules is required for use crate::mymod::
 mod api;
 mod models;
-mod repository;
+mod repositories;
 mod db;
 mod auth;
 mod config;
@@ -35,10 +36,15 @@ async fn not_found() -> Result<HttpResponse> {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
 
-    let api_db = repository::database::Database::new();
+    let api_db = repositories::database::Database::new();
     let app_data = web::Data::new(api_db);
+    // Get the port number to listen on.
+    let port = env::var("PORT")
+        .unwrap_or_else(|_| "8080".to_string())
+        .parse()
+        .expect("PORT must be a number");
 
-    println!("Running in http://localhost:8080");
+    println!("Running in http://localhost:{}", port);
 
     HttpServer::new(move || {
         App::new()
@@ -56,8 +62,9 @@ async fn main() -> std::io::Result<()> {
             .service(healthcheck)
             .default_service(web::route().to(not_found))
             .wrap(actix_web::middleware::Logger::default())
+            .wrap(middleware::Compress::default())
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("0.0.0.0", port))?
     .run()
     .await
 }

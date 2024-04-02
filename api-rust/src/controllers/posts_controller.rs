@@ -1,5 +1,5 @@
 use actix_web::{delete, get, post, put, web, HttpResponse};
-pub use crate::{models::post::Post, repository::database::Database};
+pub use crate::{models::post::Post, repositories::database::Database};
 // use crate::api::api::{Database, Post};
 
 #[get("/posts")]

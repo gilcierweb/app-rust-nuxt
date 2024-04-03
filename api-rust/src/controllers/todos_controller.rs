@@ -1,5 +1,5 @@
 use actix_web::{delete, get, HttpResponse, post, put, web};
-use crate::api::api::{Database, Todo};
+use crate::routes::router::{Database, Todo};
 
 #[get("/todos")]
 pub async fn get_todos(db: web::Data<Database>) -> HttpResponse {

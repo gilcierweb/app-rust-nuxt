@@ -11,7 +11,7 @@
 Loads environment variables from .env
 
 ```shell
-cd api-rust/
+cd routes-rust/
 cp .env-example .env # run execute in terminal
 
 # edit file .env
@@ -20,7 +20,7 @@ DATABASE_URL=postgresql://my-username:my-password@localhost:5432/app_rust_nuxt
 ```
 ### Run migrations with Diesel
 ```shell
-cd api-rust/
+cd routes-rust/
 diesel migration run
 
 # rollback migration
@@ -30,7 +30,7 @@ diesel migration redo
 ### Run api-rust
 
 ```shell
-cd api-rust/
+cd routes-rust/
 cargo run
 # run localhost:8080
 
@@ -39,7 +39,7 @@ cargo run
 ### Run populate data fake inspired by db:seed from ruby on rails
 
 ```shell
-cd api-rust/
+cd routes-rust/
 cargo run --bin seed
 # run populate data fake on database
 
@@ -53,6 +53,8 @@ What follows is a high-level list of features and those which are planned:
 * [ ] Users
 * [ ] User Authentication like gem Devise of Ruby
 * [ ] JWT for API
+* [ ] Docker and Docker Compose
+* [ ] SwaggerUI
 * [ ] Refactor all code
 
 

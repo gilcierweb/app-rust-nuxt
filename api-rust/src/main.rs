@@ -4,7 +4,7 @@ use serde::Serialize;
 use std::env;
 
 // Import modules is required for use crate::mymod::
-mod api;
+mod routes;
 mod models;
 mod repositories;
 mod db;
@@ -38,11 +38,16 @@ async fn main() -> std::io::Result<()> {
 
     let api_db = repositories::database::Database::new();
     let app_data = web::Data::new(api_db);
-    // Get the port number to listen on.
+
     let port = env::var("PORT")
         .unwrap_or_else(|_| "8080".to_string())
         .parse()
         .expect("PORT must be a number");
+
+    let host = env::var("HOST")
+        .unwrap_or_else(|_| "0.0.0.0".to_string())
+        .parse()
+        .expect("HOST must be a number");
 
     println!("Running in http://localhost:{}", port);
 
@@ -58,13 +63,13 @@ async fn main() -> std::io::Result<()> {
                     .max_age(3600),
             )
             .app_data(app_data.clone())
-            .configure(api::api::config)
+            .configure(routes::router::config)
             .service(healthcheck)
             .default_service(web::route().to(not_found))
             .wrap(actix_web::middleware::Logger::default())
             .wrap(middleware::Compress::default())
     })
-    .bind(("0.0.0.0", port))?
+    .bind((host, port))?
     .run()
     .await
 }

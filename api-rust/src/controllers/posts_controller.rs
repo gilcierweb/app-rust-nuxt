@@ -1,6 +1,6 @@
 use actix_web::{delete, get, post, put, web, HttpResponse};
 pub use crate::{models::post::Post, repositories::database::Database};
-// use crate::api::api::{Database, Post};
+// use crate::routes::routes::{Database, Post};
 
 #[get("/posts")]
 pub async fn get_posts(db: web::Data<Database>) -> HttpResponse {

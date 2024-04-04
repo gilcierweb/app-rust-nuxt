@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ./api-rust
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+      #- redis
+    ports: 
+      - '8080:8080'
+    volumes:
+      - .:/app  
+    env_file: api-rust/.env
+    environment:
+
+  database:
+    image: postgres:16.2-alpine
+    environment:
+      POSTGRES_PASSWORD: my-password
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+#  redis:
+#    image: redis:7.2.4-alpine
+#    ports:
+#      - '6379:6379'
+
+volumes:
+  db_data:

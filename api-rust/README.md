@@ -53,7 +53,8 @@ What follows is a high-level list of features and those which are planned:
 * [ ] Users
 * [ ] User Authentication like gem Devise of Ruby
 * [ ] JWT for API
-* [ ] Docker and Docker Compose
+* [X] Docker and Docker Compose
+* [ ] Layer Services
 * [ ] SwaggerUI
 * [ ] Refactor all code
 

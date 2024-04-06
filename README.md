@@ -44,16 +44,7 @@ docker-compose up --build # run http://localhost:3000
 docker-compose ps
 docker-compose stop
 docker-compose down
-docker-compose run --rm app rails db:create
-docker-compose run --rm app rails db:setup db:migrate
-docker-compose run --rm app rails db:migrate
-docker-compose run --rm app rails db:seed
-docker-compose run --rm app rails console
-docker-compose run --rm app rails rspec
-docker-compose run --rm app rails rubocop
 docker-compose run --rm app bash
-docker-compose run --rm app bundle install
-docker-compose run --rm app yarn install --check-files
 
 # sudo docker rmi --force $(docker images -f "dangling=true" -q)
 

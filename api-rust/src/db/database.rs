@@ -7,7 +7,7 @@ pub type DBPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 pub struct Database {
    pub pool: DBPool,
 }
-
+use std::sync::{Arc, Mutex};
 impl Database {
     pub fn new() -> Self {
         dotenv().ok();
@@ -16,6 +16,8 @@ impl Database {
         let pool: DBPool = r2d2::Pool::builder()
             .build(manager)
             .expect("Failed to create pool.");
+        Arc::new(
+            Mutex::new(pool.clone()));
         Database { pool }
     }
 }

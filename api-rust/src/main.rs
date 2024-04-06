@@ -2,6 +2,7 @@ use actix_cors::Cors;
 use actix_web::{get, http::header, web, App, HttpResponse, HttpServer, Responder, Result, middleware};
 use serde::Serialize;
 use std::env;
+use std::string::String;
 
 // Import modules is required for use crate::mymod::
 mod routes;
@@ -35,19 +36,23 @@ async fn not_found() -> Result<HttpResponse> {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-
     let api_db = repositories::database::Database::new();
     let app_data = web::Data::new(api_db);
 
-    let port = env::var("PORT")
+    let port: u16 = env::var("PORT")
         .unwrap_or_else(|_| "8080".to_string())
         .parse()
         .expect("PORT must be a number");
 
     let host = env::var("HOST")
         .unwrap_or_else(|_| "0.0.0.0".to_string())
-        .parse()
+        .parse::<String>()
         .expect("HOST must be a number");
+
+    let frontend_url: String = env::var("FRONTEND_URL")
+        .unwrap_or_else(|_| "http://localhost:3000".to_string())
+        .parse::<String>()
+        .expect("FRONTEND_URL is not set");
 
     println!("Running in http://localhost:{}", port);
 
@@ -55,7 +60,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(
                 Cors::default()
-                    .allowed_origin("http://localhost:3000")
+                    .allowed_origin(&frontend_url)
                     .allowed_methods(vec!["GET", "POST"])
                     .allowed_headers(vec![header::AUTHORIZATION, header::ACCEPT])
                     .allowed_header(header::CONTENT_TYPE)
@@ -69,7 +74,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(actix_web::middleware::Logger::default())
             .wrap(middleware::Compress::default())
     })
-    .bind((host, port))?
-    .run()
-    .await
+        .bind((host, port))?
+        .run()
+        .await
 }

@@ -4,8 +4,8 @@ use std::fmt::Error;
 use actix_web::{web};
 use actix_web::web::Data;
 use diesel::{QueryDsl, RunQueryDsl};
-use crate::db::database::Database;
 
+use crate::db::database::Database;
 use crate::db::schema::todos::dsl::todos;
 use crate::models::todo::Todo;
 use crate::repositories::base_repository::BaseRepository;

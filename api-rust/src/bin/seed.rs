@@ -11,7 +11,7 @@ pub mod db;
 
 use crate::db::schema::posts::dsl::*;
 use crate::db::schema::todos::dsl::*;
-use crate::{models::post::Post, models::todo::Todo, repositories::database::Database};
+use crate::{models::post::Post, models::todo::Todo, db::database::Database};
 
 pub fn post_create_seed(db: &mut Database) {
 

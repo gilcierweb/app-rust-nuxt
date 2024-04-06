@@ -36,7 +36,7 @@ async fn not_found() -> Result<HttpResponse> {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let api_db = repositories::database::Database::new();
+    let api_db = db::database::Database::new();
     let app_data = web::Data::new(api_db);
 
     let port: u16 = env::var("PORT")

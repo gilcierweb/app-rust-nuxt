@@ -1,4 +1,4 @@
-pub use crate::{models::todo::Todo, repositories::database::Database, controllers::posts_controller, controllers::todos_controller};
+pub use crate::{controllers::posts_controller, controllers::todos_controller};
 use actix_web::{web};
 
 pub fn config(cfg: &mut web::ServiceConfig) {

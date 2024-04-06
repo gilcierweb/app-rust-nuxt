@@ -1,5 +1,6 @@
 use chrono::prelude::*;
 use std::fmt::Error;
+use actix_web::web;
 
 use diesel::{QueryDsl, RunQueryDsl};
 
@@ -9,11 +10,11 @@ use crate::models::post::Post;
 use crate::repositories::base_repository::BaseRepository;
 
 pub struct PostRepository {
-    connection: Database,
+    connection: web::Data<Database>,
 }
 
 impl BaseRepository<Post> for PostRepository {
-    fn new(connection: Database) -> Self {
+    fn new(connection: web::Data<Database>) -> Self {
         Self { connection }
     }
 
@@ -21,7 +22,7 @@ impl BaseRepository<Post> for PostRepository {
         posts
             .load::<Post>(&mut self.connection.pool.get().unwrap())
             .expect("Error loading all posts")
-        // Ok((posts))
+        // Ok(posts)
     }
 
     fn find(&self, post_id: &str) -> Option<Post> {

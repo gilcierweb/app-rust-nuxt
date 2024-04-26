@@ -31,12 +31,7 @@ yarn dev --open
 ### Docker and Docker Compose
 
 ```shell
-docker build -t api-rust ./
-docker images
-docker run -p 8080:8080 --rm --name api-rust
 
-docker build --tag api-rust .
-docker run -p 8080:8080 api-rust
 
 docker-compose build
 docker-compose up # run http://localhost:3000
@@ -60,7 +55,6 @@ docker-compose ps
 docker-compose stop
 docker-compose down
 docker-compose run --rm app bash
-docker exec -it to_do_postgres sh
 docker network create rustnet
 
 # sudo docker rmi --force $(docker images -f "dangling=true" -q)

@@ -33,6 +33,26 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - rustnet
+  
+  app-nuxt:
+    container_name: app-nuxt
+    build:
+      context: ./app-nuxt
+      dockerfile: Dockerfile.nuxt
+    tty: true
+    restart: always
+    ports: 
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - rustnet
+    depends_on:
+      - app
+    
+    # entrypoint: bash -c "ls -laH && find . -name 'index.mjs' "
+
 #  redis:
 #    image: redis:7.2.4-alpine
 #    ports:

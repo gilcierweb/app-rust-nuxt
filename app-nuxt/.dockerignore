@@ -1,0 +1,18 @@
+**/node_modules
+/.nuxt
+/.output
+/node_modules
+
+.git
+.gitignore
+README.md
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+nbproject/*
+/nbproject/private/

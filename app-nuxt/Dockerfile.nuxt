@@ -1,0 +1,42 @@
+###### Builder ######
+FROM node:20-alpine as builder
+
+LABEL maintainer="gilcierweb@gmail.com"
+
+RUN apk --no-cache add openssh git bash build-base busybox ca-certificates curl
+
+WORKDIR /app
+
+COPY ./package.json /app
+# COPY ./package-lock.json /app/
+COPY ./yarn.lock /app
+
+COPY . /app
+
+# With NPM
+# RUN npm install -g npm@10.6.0
+# RUN npm cache clean --force
+# RUN npm install --legacy-peer-deps && npm cache clean --force
+# RUN npm run build
+
+# With Yarn
+RUN yarn --version
+RUN yarn cache clean
+RUN yarn install
+RUN yarn build --verbose
+
+
+###### Release Production ######
+FROM node:20-alpine as release
+RUN apk --no-cache add openssh git bash build-base busybox ca-certificates curl util-linux
+
+WORKDIR /app
+
+COPY --from=builder /app/.output  app/.output
+COPY --from=builder /app/.nuxt  app/.nuxt
+
+ENV HOST 0.0.0.0
+EXPOSE 3000
+
+# ENTRYPOINT ["node", ".output/server/index.mjs"]
+ENTRYPOINT ["node", "./app-nuxt/.output/server/index.mjs"]

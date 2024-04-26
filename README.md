@@ -32,11 +32,10 @@ yarn dev --open
 
 ```shell
 
-
 docker-compose build
-docker-compose up # run http://localhost:3000
+docker-compose up # run api-rust http://localhost:8080 app-nuxt http://localhost:3000
 
-docker-compose up --build # run http://localhost:3000
+docker-compose up --build # run api-rust http://localhost:8080 app-nuxt http://localhost:3000
 
 # Run diesel migration for create all tables migrations on database
 docker-compose run --rm app ./diesel migration run  # Or
@@ -49,6 +48,11 @@ docker-compose run --rm app ./seed # Or
 
 docker-compose run --rm app /bin/bash
 ./seed
+
+# App Nuxt
+ocker-compose build app-nuxt
+docker-compose run --rm app-nuxt
+# run http://0.0.0.0:3000
 
 # Optional
 docker-compose ps

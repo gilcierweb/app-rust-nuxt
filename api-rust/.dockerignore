@@ -6,7 +6,6 @@ api-rust/target
 *.vscode
 *.fleet
 
-
 # Node modules, yarn etc.
 node_modules
 yarn-error.log
@@ -20,7 +19,7 @@ yarn-debug.log*
 *.dump
 
 # Misc files
-#.dockerignore
+.dockerignore
 .git
 .cache
 

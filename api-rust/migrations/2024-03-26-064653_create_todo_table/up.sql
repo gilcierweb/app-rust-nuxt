@@ -1,5 +1,5 @@
 -- Your SQL goes here
-CREATE TABLE todos
+CREATE TABLE IF NOT EXISTS todos
 (
     id          VARCHAR(255) PRIMARY KEY,
     title       VARCHAR(255) NOT NULL,

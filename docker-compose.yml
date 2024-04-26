@@ -1,10 +1,13 @@
-version: '3.9'
-
 services:
   app:
+    container_name: apirust
     build:
       context: ./api-rust
       dockerfile: Dockerfile
+      args:
+        DATABASE_URL: postgres://postgres:postgres@database:5432/postgres 
+    tty: true
+    restart: always
     depends_on:
       - database
       #- redis
@@ -13,16 +16,23 @@ services:
     volumes:
       - .:/app  
     env_file: api-rust/.env
-    environment:
+#    environment:
+    networks:
+      - rustnet
 
   database:
+    container_name: database
     image: postgres:16.2-alpine
     environment:
-      POSTGRES_PASSWORD: my-password
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - '5437:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
-
+    networks:
+      - rustnet
 #  redis:
 #    image: redis:7.2.4-alpine
 #    ports:
@@ -30,3 +40,7 @@ services:
 
 volumes:
   db_data:
+
+networks:
+  rustnet:
+    driver: bridge

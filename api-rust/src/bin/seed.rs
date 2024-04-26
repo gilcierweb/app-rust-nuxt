@@ -14,9 +14,10 @@ use crate::db::schema::todos::dsl::*;
 use crate::{models::post::Post, models::todo::Todo, db::database::Database};
 
 pub fn post_create_seed(db: &mut Database) {
-
+    println!("Seed Posts");
     for index in 1..12 {
         println!("{}", index);
+       
         let paragraph = words::paragraph(5, 4, 11, "\n".to_string());
 
         let post = Post {
@@ -37,7 +38,7 @@ pub fn post_create_seed(db: &mut Database) {
 }
 
 pub fn todo_create_seed(db: &mut Database) {
-
+    println!("Seed Todos");
     for index in 1..12 {
         println!("{}", index);
         let paragraph = words::paragraph(5, 4, 11, "\n".to_string());
@@ -60,7 +61,7 @@ pub fn todo_create_seed(db: &mut Database) {
 
 fn main() {
     let mut api_db = Database::new();
-    println!("rust db:seed");
+    println!("rust db:seed start");
     post_create_seed(&mut api_db);
     todo_create_seed(&mut api_db);
     println!("rust db:seed end");

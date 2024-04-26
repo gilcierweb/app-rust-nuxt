@@ -35,16 +35,33 @@ docker build -t api-rust ./
 docker images
 docker run -p 8080:8080 --rm --name api-rust
 
+docker build --tag api-rust .
+docker run -p 8080:8080 api-rust
+
 docker-compose build
 docker-compose up # run http://localhost:3000
 
 docker-compose up --build # run http://localhost:3000
+
+# Run diesel migration for create all tables migrations on database
+docker-compose run --rm app ./diesel migration run  # Or
+
+docker-compose run --rm app /bin/bash
+./diesel migration run
+
+# Run db:seed For populate data faker on database
+docker-compose run --rm app ./seed # Or
+
+docker-compose run --rm app /bin/bash
+./seed
 
 # Optional
 docker-compose ps
 docker-compose stop
 docker-compose down
 docker-compose run --rm app bash
+docker exec -it to_do_postgres sh
+docker network create rustnet
 
 # sudo docker rmi --force $(docker images -f "dangling=true" -q)
 

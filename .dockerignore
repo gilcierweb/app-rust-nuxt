@@ -6,6 +6,17 @@ api-rust/target
 *.vscode
 *.fleet
 
+**/.DS_Store
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/docker-compose*
+**/compose*
+**/Dockerfile*
+**/node_modules
+**/npm-debug.log
+README.md
 
 # Node modules, yarn etc.
 node_modules

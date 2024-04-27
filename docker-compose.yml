@@ -3,7 +3,7 @@ services:
     container_name: apirust
     build:
       context: ./api-rust
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.rust
       args:
         DATABASE_URL: postgres://postgres:postgres@database:5432/postgres 
     tty: true
@@ -45,7 +45,7 @@ services:
       - '3000:3000'
     volumes:
       - .:/app
-      - /app/node_modules
+      - ./node_modules:/app/node_modules
     networks:
       - rustnet
     depends_on:

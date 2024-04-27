@@ -20,8 +20,8 @@ const { pending, data: posts } = await useFetch<Posts[]>('https://jsonplaceholde
                 Loading ... <br>
                 <v-progress-circular indeterminate :size="200" model-value="20"></v-progress-circular>
             </v-col>
-            <v-col cols="4" v-else v-for="row in posts" :key="row.id">
-                <v-card width="400" class="mt-4">
+            <v-col cols="12" sm="6" md="4" lg="3" v-else v-for="row in posts" :key="row.id">
+                <v-card class="mt-4">
                     <v-card-item>
                         <v-card-title>{{ row.title }}</v-card-title>
                     </v-card-item>

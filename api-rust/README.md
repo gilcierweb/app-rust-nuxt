@@ -30,7 +30,7 @@ diesel migration redo
 ### Run api-rust
 
 ```shell
-cd routes-rust/
+cd api-rust/
 cargo run
 # run localhost:8080
 
@@ -39,7 +39,7 @@ cargo run
 ### Run populate data fake inspired by db:seed from ruby on rails
 
 ```shell
-cd routes-rust/
+cd api-rust/
 cargo run --bin seed
 # run populate data fake on database
 

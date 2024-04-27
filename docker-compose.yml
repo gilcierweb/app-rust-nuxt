@@ -8,8 +8,11 @@ services:
         DATABASE_URL: postgres://postgres:postgres@database:5432/postgres 
     tty: true
     restart: always
+    environment:
+      FRONTEND_URL: http://app-nuxt:3000
     depends_on:
       - database
+      # - app-nuxt
       #- redis
     ports: 
       - '8080:8080'
@@ -41,6 +44,8 @@ services:
       dockerfile: Dockerfile.nuxt
     tty: true
     restart: always
+    environment:
+      NUXT_PUBLIC_API_RUST_BASE_URL: http://app:8080
     ports: 
       - '3000:3000'
     volumes:

@@ -11,7 +11,7 @@
 Loads environment variables from .env
 
 ```shell
-cd routes-rust/
+cd api-rust/
 cp .env-example .env # run execute in terminal
 
 # edit file .env
@@ -20,7 +20,7 @@ DATABASE_URL=postgresql://my-username:my-password@localhost:5432/app_rust_nuxt
 ```
 ### Run migrations with Diesel
 ```shell
-cd routes-rust/
+cd api-rust/
 diesel migration run
 
 # rollback migration

@@ -2,9 +2,6 @@
 # see https://diesel.rs/guides/configuring-diesel-cli
 
 [print_schema]
-#file = "src/schema.rs"
-# file = "src/models/schema.rs"
-# file = "src/repositories/schema.rs"
 file = "src/db/schema.rs"
 custom_type_derives = ["diesel::query_builder::QueryId"]
 

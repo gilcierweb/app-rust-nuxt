@@ -5,7 +5,7 @@ services:
       context: ./api-rust
       dockerfile: Dockerfile.rust
       args:
-        DATABASE_URL: postgres://postgres:postgres@database:5432/postgres 
+        DATABASE_URL: postgres://postgres:postgres@database:5432/app_rust_nuxt 
     tty: true
     restart: always
     environment:
@@ -27,7 +27,7 @@ services:
     container_name: database
     image: postgres:16.2-alpine
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: app_rust_nuxt      
       POSTGRES_PASSWORD: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:

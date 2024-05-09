@@ -1,5 +1,5 @@
 pub use crate::{controllers::posts_controller, controllers::todos_controller};
-use actix_web::{web};
+use actix_web::web;
 
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
@@ -13,6 +13,9 @@ pub fn config(cfg: &mut web::ServiceConfig) {
             .service(posts_controller::get_post_by_id)
             .service(posts_controller::get_posts)
             .service(posts_controller::update_post_by_id)
-            .service(posts_controller::delete_post_by_id),
+            .service(posts_controller::delete_post_by_id)
+            .service(web::scope("/v1")
+                .service(todos_controller::get_todos)
+            ),
     );
 }

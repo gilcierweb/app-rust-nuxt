@@ -1,23 +1,27 @@
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
-use diesel::{Queryable, Insertable, Associations, AsChangeset};
+use diesel::{Queryable, Insertable, AsChangeset, Associations};
+use uuid::Uuid;
 
-use crate::db::schema::{users,profiles};
+use crate::db::schema::profiles;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Queryable, Insertable, Associations, AsChangeset)]
+use super::user::User;
+
+#[derive(Serialize, Deserialize, Debug, Clone, Queryable,  Associations, Insertable, AsChangeset )]
 #[diesel(belongs_to(User, foreign_key = user_id))]
 #[diesel(table_name = profiles)]
 pub struct Profile {
     #[serde(default)]
-    pub id: String,
-    pub first_name: String,
-    pub last_name: String,
-    pub full_name: String,
-    pub nickname: String,
+    pub id: Uuid,
+    pub first_name: Option<String>,
+    pub last_name: Option<String>,
+    pub full_name: Option<String>,
+    pub nickname: Option<String>,
     pub bio: Option<String>,
-    pub birthday: Option<chrono::NaiveDate>,
+    pub birthday: chrono::NaiveDate,
     pub avatar: String, 
-    pub phone: Option<String>,
-    pub user_id: Option<Uuid>,
+    pub phone: Option<i64>,
+    pub user_id: Uuid,
     pub created_at: Option<chrono::NaiveDateTime>,
     pub updated_at: Option<chrono::NaiveDateTime>,
 }

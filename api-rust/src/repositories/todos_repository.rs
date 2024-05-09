@@ -1,9 +1,8 @@
-use chrono::prelude::*;
 use std::fmt::Error;
 
-use actix_web::{web};
 use actix_web::web::Data;
 use diesel::{QueryDsl, RunQueryDsl};
+use uuid::Uuid;
 
 use crate::db::database::Database;
 use crate::db::schema::todos::dsl::todos;
@@ -11,7 +10,7 @@ use crate::models::todo::Todo;
 use crate::repositories::base_repository::BaseRepository;
 
 pub struct TodoRepository {
-    connection: web::Data<Database>,
+    connection: Data<Database>,
 }
 
 impl BaseRepository<Todo> for TodoRepository {
@@ -19,13 +18,13 @@ impl BaseRepository<Todo> for TodoRepository {
         Self { connection }
     }
 
-    fn all(&self) -> Vec<Todo> {
-        todos
-            .load::<Todo>(&mut self.connection.pool.get().unwrap())
-            .expect("Error loading all todos")
+    fn all(&self) -> Result<Vec<Todo>, diesel::result::Error> {
+        let mut conn = self.connection.pool.get().unwrap();
+        let items = todos.load::<Todo>(&mut conn).expect("Error loading all todos");
+        Ok(items)
     }
 
-    fn find(&self, id: &str) -> Option<Todo> {
+    fn find(&self, id: &Uuid) -> Option<Todo> {
         let todo = todos
             .find(id)
             .get_result::<Todo>(&mut self.connection.pool.get().unwrap())
@@ -34,10 +33,7 @@ impl BaseRepository<Todo> for TodoRepository {
     }
 
     fn create(&mut self, entity: &mut Todo) -> Result<Todo, Error> {
-        let todo = Todo {
-            id: uuid::Uuid::new_v4().to_string(),
-            created_at: Some(Utc::now().naive_utc()),
-            updated_at: Some(Utc::now().naive_utc()),
+        let todo = Todo {           
             ..entity.to_owned()
         };
         diesel::insert_into(todos)
@@ -47,8 +43,8 @@ impl BaseRepository<Todo> for TodoRepository {
         Ok(todo)
     }
 
-    fn update(&mut self, id: &str, todo: &mut Todo) -> Option<Todo> {
-        todo.updated_at = Some(Utc::now().naive_utc());
+    fn update(&mut self, id: &Uuid, todo: &mut Todo) -> Option<Todo> {
+ 
         let todo = diesel::update(todos.find(id))
             .set(todo.to_owned())
             .get_result::<Todo>(&mut self.connection.pool.get().unwrap())
@@ -56,7 +52,7 @@ impl BaseRepository<Todo> for TodoRepository {
         Some(todo)
     }
 
-    fn delete(&mut self, id: &str) -> Option<usize> {
+    fn delete(&mut self, id: &Uuid) -> Option<usize> {
         let count = diesel::delete(todos.find(id))
             .execute(&mut self.connection.pool.get().unwrap())
             .expect("Error deleting todo by id");

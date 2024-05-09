@@ -1,12 +1,24 @@
-use actix_web::{delete, get, HttpResponse, post, put, web};
+use actix_web::{delete, Error, get, HttpResponse, post, put, web};
+use uuid::Uuid;
 use crate::db::database::Database;
 use crate::{models::todo::Todo, repositories::base_repository::BaseRepository,
             repositories::todos_repository::TodoRepository};
 
 #[get("/todos")]
-pub async fn get_todos(db: web::Data<Database>) -> HttpResponse {
-    let todos = TodoRepository::new(db).all();
-    HttpResponse::Ok().json(todos)
+pub async fn get_todos(db: web::Data<Database>) -> Result<HttpResponse, Error>  {
+    let result = TodoRepository::new(db).all();
+    match result {
+        Ok(todos) => {
+            let response = serde_json::to_string(&todos).unwrap();
+
+            Ok(HttpResponse::Ok()
+                .content_type("application/json")
+                .body(response))
+        },
+        Err(err) => {
+            Ok(HttpResponse::InternalServerError().body(err.to_string()))
+        }
+    }
 }
 
 #[post("/todos")]
@@ -20,7 +32,7 @@ pub async fn create_todo(db: web::Data<Database>, new_todo: web::Json<Todo>) -> 
 }
 
 #[get("/todos/{id}")]
-pub async fn get_todo_by_id(db: web::Data<Database>, id: web::Path<String>) -> HttpResponse {
+pub async fn get_todo_by_id(db: web::Data<Database>, id: web::Path<Uuid>) -> HttpResponse {
     let todo = TodoRepository::new(db).find(&id);
 
     match todo {
@@ -32,7 +44,7 @@ pub async fn get_todo_by_id(db: web::Data<Database>, id: web::Path<String>) -> H
 #[put("/todos/{id}")]
 pub async fn update_todo_by_id(
     db: web::Data<Database>,
-    id: web::Path<String>,
+    id: web::Path<Uuid>,
     updated_todo: web::Json<Todo>,
 ) -> HttpResponse {
     let todo = TodoRepository::new(db).update(&id, &mut updated_todo.into_inner());
@@ -44,7 +56,7 @@ pub async fn update_todo_by_id(
 }
 
 #[delete("/todos/{id}")]
-pub async fn delete_todo_by_id(db: web::Data<Database>, id: web::Path<String>) -> HttpResponse {
+pub async fn delete_todo_by_id(db: web::Data<Database>, id: web::Path<Uuid>) -> HttpResponse {
     let todo = TodoRepository::new(db).delete(&id);
 
     match todo {

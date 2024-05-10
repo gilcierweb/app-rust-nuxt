@@ -21,7 +21,7 @@ impl BaseRepository<User> for UserRepository {
 
     fn all(&self) -> Result<Vec<User>, diesel::result::Error> {
         let mut conn = self.connection.pool.get().unwrap();
-        let items = users.load::<User>(&mut conn)?;
+        let items = users.load::<User>(&mut conn).expect("Error loading all users");
         Ok(items)
     }
 

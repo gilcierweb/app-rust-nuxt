@@ -21,7 +21,7 @@ impl BaseRepository<Profile> for ProfileRepository {
 
     fn all(&self) -> Result<Vec<Profile>, diesel::result::Error> {
         let mut conn = self.connection.pool.get().unwrap();
-        let items = profiles.load::<Profile>(&mut conn)?;
+        let items = profiles.load::<Profile>(&mut conn).expect("Error loading all profiles");
         Ok(items)
     }
 

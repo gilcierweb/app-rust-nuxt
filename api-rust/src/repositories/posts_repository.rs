@@ -20,7 +20,7 @@ impl BaseRepository<Post> for PostRepository {
 
     fn all(&self) -> Result<Vec<Post>, diesel::result::Error> {
         let mut conn = self.connection.pool.get().unwrap();
-        let items = posts.load::<Post>(&mut conn).expect("Error loading all todos");
+        let items = posts.load::<Post>(&mut conn).expect("Error loading all posts");
         Ok(items)
     }
 

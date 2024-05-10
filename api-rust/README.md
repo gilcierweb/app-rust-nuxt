@@ -50,12 +50,14 @@ What follows is a high-level list of features and those which are planned:
 * [x] Connection Database postgresql with diesel rust
 * [x] Posts
 * [x] Todos
-* [ ] Users
+* [X] Users
+* [X] Profiles
 * [ ] User Authentication like gem Devise of Ruby
 * [ ] JWT for API
 * [X] Docker and Docker Compose
 * [ ] Layer Services
 * [ ] SwaggerUI
+* [ ] Concurrency and Parallelism with Jobs in Background
 * [ ] Refactor all code
 
 

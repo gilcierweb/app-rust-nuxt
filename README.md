@@ -49,8 +49,13 @@ docker-compose run --rm app ./seed # Or
 docker-compose run --rm app /bin/bash
 ./seed
 
-# App Nuxt
-ocker-compose build app-nuxt
+# Api Rust individual
+docker-compose build api-rust
+docker-compose run --rm api-rust
+# run http://0.0.0.0:8080
+
+# App Nuxt individual
+docker-compose build app-nuxt
 docker-compose run --rm app-nuxt
 # run http://0.0.0.0:3000
 

@@ -1,4 +1,4 @@
-# app-rust-nuxt
+# App Rust Nuxt
 ## App build with Rust Lang and Nuxt.js. Api Rust and frontend with nuxt.js using vue.js.
 
 ### Skill

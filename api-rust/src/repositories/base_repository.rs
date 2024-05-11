@@ -1,12 +1,12 @@
 use std::fmt::Error;
-use actix_web::web;
+use actix_web::{web, HttpRequest};
 use uuid::Uuid;
 
 use crate::db::database::Database;
 
 pub trait BaseRepository<TEntity> {
     /// create a new repository with the connection
-    fn new(connection: web::Data<Database>) -> Self;
+    fn new(connection: web::Data<Database>, request: Option<HttpRequest>) -> Self;
     fn all(&self) -> Result<Vec<TEntity>, diesel::result::Error>;
     fn find(&self, id: &Uuid) -> Option<TEntity>;
     fn create(&mut self,  entity: &mut TEntity) -> Result<TEntity, Error>;

@@ -1,5 +1,5 @@
 use std::fmt::Error;
-use actix_web::web;
+use actix_web::{web, HttpRequest};
 
 use diesel::{QueryDsl, RunQueryDsl};
 use uuid::Uuid;
@@ -11,12 +11,14 @@ use crate::repositories::base_repository::BaseRepository;
 
 pub struct ProfileRepository {
     connection: web::Data<Database>,
+    request: Option<HttpRequest> // Optional HttpRequest
+
 }
 
 impl BaseRepository<Profile> for ProfileRepository {
 
-    fn new(connection: web::Data<Database>) -> Self {
-        Self { connection }
+    fn new(connection: web::Data<Database>, request: Option<HttpRequest>) -> Self {
+        Self { connection, request }
     }
 
     fn all(&self) -> Result<Vec<Profile>, diesel::result::Error> {

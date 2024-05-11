@@ -1,5 +1,8 @@
-pub use crate::{controllers::posts_controller, controllers::todos_controller, controllers::users_controller, controllers::profiles_controller};
+pub use crate::{controllers::posts_controller, controllers::todos_controller, controllers::users_controller,
+                controllers::profiles_controller, controllers::users::registrations_controller};
 use actix_web::web;
+
+use crate::db::schema::users::dsl::users;
 
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
@@ -25,6 +28,12 @@ pub fn config(cfg: &mut web::ServiceConfig) {
                 .service(profiles_controller::get_profiles)
                 .service(profiles_controller::update_profile_by_id)
                 .service(profiles_controller::delete_profile_by_id)
-            ),
+            )
+            .service(web::scope("/v2")
+                .service(web::resource("/users").route(web::post().to(registrations_controller::RegistrationsController::create)))
+                .service(users_controller::update_user_by_id)
+                .service(users_controller::delete_user_by_id)
+            )
+        ,
     );
 }

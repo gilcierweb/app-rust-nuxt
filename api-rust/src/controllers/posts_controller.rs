@@ -8,7 +8,7 @@ use crate::db::database::Database;
 
 #[get("/posts")]
 pub async fn get_posts(db: web::Data<Database>) -> Result<HttpResponse, Error> {
-    let result = PostRepository::new(db).all();
+    let result = PostRepository::new(db, None).all();
     match result {
         Ok(posts) => {
             let response = serde_json::to_string(&posts).unwrap();
@@ -25,7 +25,7 @@ pub async fn get_posts(db: web::Data<Database>) -> Result<HttpResponse, Error> {
 
 #[post("/posts")]
 pub async fn create_post(db: web::Data<Database>, new_post: web::Json<Post>) -> HttpResponse {
-    let post = PostRepository::new(db).create(&mut new_post.into_inner());
+    let post = PostRepository::new(db, None).create(&mut new_post.into_inner());
 
     match post {
         Ok(post) => HttpResponse::Ok().json(post),
@@ -35,7 +35,7 @@ pub async fn create_post(db: web::Data<Database>, new_post: web::Json<Post>) -> 
 
 #[get("/posts/{id}")]
 pub async fn get_post_by_id(db: web::Data<Database>, id: web::Path<Uuid>) -> HttpResponse {
-    let post = PostRepository::new(db).find(&id);
+    let post = PostRepository::new(db, None).find(&id);
 
     match post {
         Some(post) => HttpResponse::Ok().json(post),
@@ -49,7 +49,7 @@ pub async fn update_post_by_id(
     id: web::Path<Uuid>,
     updated_post: web::Json<Post>,
 ) -> HttpResponse {
-    let post = PostRepository::new(db).update(&id, &mut updated_post.into_inner());
+    let post = PostRepository::new(db, None).update(&id, &mut updated_post.into_inner());
 
     match post {
         Some(post) => HttpResponse::Ok().json(post),
@@ -59,7 +59,7 @@ pub async fn update_post_by_id(
 
 #[delete("/posts/{id}")]
 pub async fn delete_post_by_id(db: web::Data<Database>, id: web::Path<Uuid>) -> HttpResponse {
-    let post = PostRepository::new(db).delete(&id);
+    let post = PostRepository::new(db, None).delete(&id);
 
     match post {
         Some(_) => HttpResponse::Ok().finish(),

@@ -1,47 +1,79 @@
-use std::fmt::Error;
-use actix_web::web;
+use actix_web::{web, HttpRequest};
+use chrono::Utc;
 
 use diesel::{QueryDsl, RunQueryDsl};
 use uuid::Uuid;
 
 use crate::db::database::Database;
 use crate::db::schema::users::dsl::*;
-use crate::models::user::User;
+use crate::models::user::{NewUser, User};
 use crate::repositories::base_repository::BaseRepository;
+
 
 pub struct UserRepository {
     connection: web::Data<Database>,
+    request: Option<HttpRequest>, // Optional HttpRequest
 }
 
 impl BaseRepository<User> for UserRepository {
-
-    fn new(connection: web::Data<Database>) -> Self {
-        Self { connection }
+    fn new(connection: web::Data<Database>, request: Option<HttpRequest>) -> Self {
+        Self {
+            connection,
+            request,
+        }
     }
 
     fn all(&self) -> Result<Vec<User>, diesel::result::Error> {
         let mut conn = self.connection.pool.get().unwrap();
-        let items = users.load::<User>(&mut conn).expect("Error loading all users");
+        let items = users
+            .load::<User>(&mut conn)
+            .expect("Error loading all users");
         Ok(items)
     }
 
-
     fn find(&self, user_id: &Uuid) -> Option<User> {
-        let user = users.find(user_id)
+        let user = users
+            .find(user_id)
             .get_result::<User>(&mut self.connection.pool.get().unwrap())
             .expect("Error loading User by id");
         Some(user)
     }
 
-    fn create(&mut self, entity: &mut User) -> Result<User, Error> {
-        let user = User {        
-            ..entity.to_owned()
+    fn create(&mut self, entity: &mut User) -> Result<User, std::fmt::Error> {
+        use argon2::{
+            password_hash::{rand_core::OsRng, PasswordHasher, SaltString},
+            Argon2,
         };
-        diesel::insert_into(users)
-            .values(&user)
-            .execute(&mut self.connection.pool.get().unwrap())
+
+        let salt = SaltString::generate(&mut OsRng);
+
+        let password_hash = Argon2::default()
+            .hash_password(entity.encrypted_password.clone().as_bytes(), &salt)
+            .expect("Unable to hash password.")
+            .to_string();
+
+        let ip = self
+            .request
+            .as_ref()
+            .and_then(|req| req.peer_addr())
+            .map(|addr| addr.to_string());
+
+        let new_user = NewUser {
+            encrypted_password: password_hash,
+            email: entity.email.clone(),
+            current_sign_in_at: Some(Utc::now().naive_utc()), // Default timestamp
+            current_sign_in_ip: ip.clone(),
+            last_sign_in_at: Some(Utc::now().naive_utc()), // Default timestamp
+            last_sign_in_ip: ip.clone(),
+        };
+
+        let mut conn = self.connection.pool.get().unwrap();
+        let inserted_user = diesel::insert_into(users)
+            .values(&new_user)
+            .get_result::<User>(&mut conn)
             .expect("Error creating new User");
-        Ok(user)
+
+        Ok(inserted_user)
     }
 
     fn update(&mut self, user_id: &Uuid, entity: &mut User) -> Option<User> {

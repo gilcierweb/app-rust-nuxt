@@ -1,4 +1,5 @@
 use std::fmt::Error;
+use actix_web::HttpRequest;
 
 use actix_web::web::Data;
 use diesel::{QueryDsl, RunQueryDsl};
@@ -11,11 +12,12 @@ use crate::repositories::base_repository::BaseRepository;
 
 pub struct TodoRepository {
     connection: Data<Database>,
+    request: Option<HttpRequest> // Optional HttpRequest
 }
 
 impl BaseRepository<Todo> for TodoRepository {
-    fn new(connection: Data<Database>) -> Self {
-        Self { connection }
+    fn new(connection: Data<Database>, request: Option<HttpRequest>) -> Self {
+        Self { connection, request }
     }
 
     fn all(&self) -> Result<Vec<Todo>, diesel::result::Error> {

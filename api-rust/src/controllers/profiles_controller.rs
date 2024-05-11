@@ -6,7 +6,7 @@ use crate::{models::profile::Profile, repositories::base_repository::BaseReposit
 
 #[get("/profiles")]
 pub async fn get_profiles(db: web::Data<Database>) -> Result<HttpResponse, Error> {
-    let result = ProfileRepository::new(db).all();
+    let result = ProfileRepository::new(db, None).all();
     match result {
         Ok(profiles) => {
             let response = serde_json::to_string(&profiles).unwrap();
@@ -23,7 +23,7 @@ pub async fn get_profiles(db: web::Data<Database>) -> Result<HttpResponse, Error
 
 #[post("/profiles")]
 pub async fn create_profile(db: web::Data<Database>, new_profile: web::Json<Profile>) -> HttpResponse {
-    let profile = ProfileRepository::new(db).create(&mut new_profile.into_inner());
+    let profile = ProfileRepository::new(db, None).create(&mut new_profile.into_inner());
 
     match profile {
         Ok(profile) => HttpResponse::Ok().json(profile),
@@ -33,7 +33,7 @@ pub async fn create_profile(db: web::Data<Database>, new_profile: web::Json<Prof
 
 #[get("/profiles/{id}")]
 pub async fn get_profile_by_id(db: web::Data<Database>, id: web::Path<Uuid>) -> HttpResponse {
-    let profile = ProfileRepository::new(db).find(&id);
+    let profile = ProfileRepository::new(db, None).find(&id);
 
     match profile {
         Some(profile) => HttpResponse::Ok().json(profile),
@@ -47,7 +47,7 @@ pub async fn update_profile_by_id(
     id: web::Path<Uuid>,
     updated_profile: web::Json<Profile>,
 ) -> HttpResponse {
-    let profile = ProfileRepository::new(db).update(&id, &mut updated_profile.into_inner());
+    let profile = ProfileRepository::new(db, None).update(&id, &mut updated_profile.into_inner());
 
     match profile {
         Some(profile) => HttpResponse::Ok().json(profile),
@@ -57,7 +57,7 @@ pub async fn update_profile_by_id(
 
 #[delete("/profiles/{id}")]
 pub async fn delete_profile_by_id(db: web::Data<Database>, id: web::Path<Uuid>) -> HttpResponse {
-    let profile = ProfileRepository::new(db).delete(&id);
+    let profile = ProfileRepository::new(db, None).delete(&id);
 
     match profile {
         Some(_) => HttpResponse::Ok().finish(),

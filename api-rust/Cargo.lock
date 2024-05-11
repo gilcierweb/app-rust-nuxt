@@ -274,6 +274,7 @@ dependencies = [
  "diesel",
  "dotenv",
  "fakeit",
+ "rand 0.8.5",
  "serde",
  "serde_json",
  "uuid 1.8.0",

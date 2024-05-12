@@ -23,7 +23,7 @@ const { pending, data: profiles } = await useFetch<Profiles[]>(`${config.public.
 
 <template>
    <v-container>
-        <h1>Index Users Profiles Page</h1>
+        <h1>Index Profiles Page</h1>
         <v-row>
 
             <v-col align="center" :cols="12" align-self="center" v-if="pending">

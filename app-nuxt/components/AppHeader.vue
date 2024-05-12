@@ -18,6 +18,16 @@
                     Todos page
                 </v-list-item>
             </NuxtLink>
+            <NuxtLink to="/users">
+                <v-list-item link>
+                    Users page
+                </v-list-item>
+            </NuxtLink>
+            <NuxtLink to="/profiles">
+                <v-list-item link>
+                    Profiles page
+                </v-list-item>
+            </NuxtLink>
             <NuxtLink to="/about">
                 <v-list-item link>
                     About page

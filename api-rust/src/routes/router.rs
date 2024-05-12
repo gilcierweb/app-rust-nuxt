@@ -2,8 +2,6 @@ pub use crate::{controllers::posts_controller, controllers::todos_controller, co
                 controllers::profiles_controller, controllers::users::registrations_controller};
 use actix_web::web;
 
-use crate::db::schema::users::dsl::users;
-
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/api")

@@ -3,6 +3,7 @@ use chrono::Utc;
 
 use diesel::{QueryDsl, RunQueryDsl};
 use uuid::Uuid;
+use crate::auth::password::password_hash;
 
 use crate::db::database::Database;
 use crate::db::schema::users::dsl::*;
@@ -40,17 +41,7 @@ impl BaseRepository<User> for UserRepository {
     }
 
     fn create(&mut self, entity: &mut User) -> Result<User, std::fmt::Error> {
-        use argon2::{
-            password_hash::{rand_core::OsRng, PasswordHasher, SaltString},
-            Argon2,
-        };
-
-        let salt = SaltString::generate(&mut OsRng);
-
-        let password_hash = Argon2::default()
-            .hash_password(entity.encrypted_password.clone().as_bytes(), &salt)
-            .expect("Unable to hash password.")
-            .to_string();
+  
 
         let ip = self
             .request
@@ -59,7 +50,7 @@ impl BaseRepository<User> for UserRepository {
             .map(|addr| addr.to_string());
 
         let new_user = NewUser {
-            encrypted_password: password_hash,
+            encrypted_password: password_hash(entity.encrypted_password.clone()),
             email: entity.email.clone(),
             current_sign_in_at: Some(Utc::now().naive_utc()), // Default timestamp
             current_sign_in_ip: ip.clone(),
@@ -69,7 +60,7 @@ impl BaseRepository<User> for UserRepository {
 
         let mut conn = self.connection.pool.get().unwrap();
         let inserted_user = diesel::insert_into(users)
-            .values(&new_user)
+            .values(&new_user)  
             .get_result::<User>(&mut conn)
             .expect("Error creating new User");
 

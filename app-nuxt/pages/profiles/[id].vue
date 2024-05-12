@@ -23,7 +23,7 @@ const { data: profile, pending } = await useLazyFetch<Profile>(`${config.public.
 
 <template>
     <v-container>
-        <h1>Show Profile Pagedsdfdsf</h1>
+        <h1>Show Profile Page</h1>
         <v-row>
 
             <v-col align="center" :cols="12" align-self="center" v-if="pending">

@@ -1,5 +1,3 @@
-// use actix_web::{delete, delete, get, patch, post, put, web, HttpResponse};
-
 use actix_web::{HttpRequest, HttpResponse, web};
 use crate::db::database::Database;
 use crate::models::user::User;

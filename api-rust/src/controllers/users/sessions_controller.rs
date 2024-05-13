@@ -4,7 +4,6 @@ use crate::models::user::User;
 use crate::repositories::base_repository::BaseRepository;
 use crate::repositories::users_repository::UserRepository;
 
-// use actix_web::{delete, delete, get, patch, post, put, web, HttpResponse};
 pub struct SessionsController;
 
 impl SessionsController {

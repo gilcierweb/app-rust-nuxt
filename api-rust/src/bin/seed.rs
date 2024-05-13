@@ -1,4 +1,4 @@
-use chrono::{Duration, NaiveDate, TimeZone, Utc};
+use chrono::{ NaiveDate, TimeZone, Utc};
 use diesel::prelude::*;
 use fakeit::{contact, image, internet, name, password, words};
 use uuid::Uuid;
@@ -17,7 +17,6 @@ use crate::db::schema::posts::dsl::*;
 use crate::db::schema::todos::dsl::*;
 use crate::{models::post::NewPost, models::todo::NewTodo, db::database::Database};
 use crate::db::schema::profiles::dsl::profiles;
-use crate::db::schema::profiles::user_id;
 use crate::db::schema::users::dsl::*;
 use crate::models::profile::NewProfile;
 use crate::models::user::NewUser;
@@ -65,7 +64,7 @@ pub fn user_create_seed(db: &mut Database) {
     for index in 1..12 {
         println!("{}", index);
 
-        let fake_password = password::generate(true, true, true, 26); // You can use fakeit to generate a fake password if needed
+        let fake_password = password::generate(true, true, true, 97); // You can use fakeit to generate a fake password if needed
         let fake_email = contact::email();
         let fake_ip = internet::ipv4_address();
         let fake_timestamp = Utc::now().naive_utc();

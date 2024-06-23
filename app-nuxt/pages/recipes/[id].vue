@@ -56,8 +56,7 @@ const { data: product, pending } = await useLazyFetch<Product>(
         </template>
         <h2>instructions</h2>
         <template v-for="row in product.instructions" :key="row.id">
-          <div>
-         
+          <div>         
             <p>{{ row }}</p>
           </div>
         </template>
@@ -66,6 +65,12 @@ const { data: product, pending } = await useLazyFetch<Product>(
             <v-chip>{{ row }}</v-chip>
           </div>
         </template>
+        <p>caloriesPerServing: {{ product.caloriesPerServing }}</p>
+        <p>cuisine: {{ product.cuisine }}</p>
+        <p>difficulty: {{ product.difficulty }}</p>
+        <p>servings: {{ product.servings}}</p>
+        <p>cookTimeMinutes: {{ product.cookTimeMinutes }}</p>
+        <p>prepTimeMinutes: {{ product.prepTimeMinutes }}</p>
       </v-col>
     </v-row>
   </v-container>

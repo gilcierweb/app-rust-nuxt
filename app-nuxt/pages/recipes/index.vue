@@ -1,0 +1,57 @@
+<script setup lang="ts">
+const { $truncate } = useNuxtApp();
+interface Products {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    url: string;   
+    category: string;
+    image: string;
+}
+
+const config = useRuntimeConfig();
+const { pending, data: products } = await useFetch<Products[]>(`https://dummyjson.com/recipes`, {
+    lazy: true
+    // ,server: false
+})
+
+</script>
+
+<template>
+    <v-container>
+        <h1>Index page</h1>
+        <v-row>  
+            <v-col align="center" :cols="12" align-self="center" v-if="pending">
+                Loading ... <br>
+                <v-progress-circular indeterminate :size="200" model-value="20"></v-progress-circular>
+            </v-col>
+            <v-col cols="12" sm="6" md="4" lg="3" v-else v-for="row in products.recipes" :key="row.id">
+                <v-card class="mt-4">
+                    <v-card-item>
+                        <v-card-title>{{ row.name }}</v-card-title>
+                        <!-- <v-card-subtitle>{{ row.description }}</v-card-subtitle> -->
+                    </v-card-item>
+
+                    <v-card-text>
+                        <v-img :lazy-src="row.image" :src="row.image" cover alt="image" aspect-ratio="1"></v-img>
+                        <!-- <p> {{ $truncate(row.description, 70, '...') }}</p> -->
+                        <p>{{ row.rating }}</p>
+                        <template v-for="tag in row.tags" :key="row.id">
+                            <div>  
+                                <v-chip>{{ tag }}</v-chip>
+                            </div>
+                        </template>
+                
+                        <p>
+                            <NuxtLink :to="`/recipes/${row.id}`">
+                                <v-btn block color="success">Details</v-btn>
+                            </NuxtLink>
+                        </p>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
+
+    </v-container>
+</template>

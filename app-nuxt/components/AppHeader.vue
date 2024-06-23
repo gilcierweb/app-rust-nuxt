@@ -18,6 +18,11 @@
                     Todos page
                 </v-list-item>
             </NuxtLink>
+            <NuxtLink to="/recipes">
+                <v-list-item link>
+                    Recipes page
+                </v-list-item>
+            </NuxtLink>
             <NuxtLink to="/users">
                 <v-list-item link>
                     Users page
